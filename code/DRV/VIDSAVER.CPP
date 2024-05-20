@@ -48,5 +48,3 @@ void VideoSaver::Restore(void)
   Point  = PointRestore;
   PixIdx = 0;
   }
-
-

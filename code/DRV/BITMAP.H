@@ -32,5 +32,3 @@ class BitMap
   void         Draw (Coord2d Start,Box2d Mask,VideoMode *v);
   };
 #endif
-
-

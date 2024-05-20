@@ -10,5 +10,3 @@ debug.exe:      debug.obj stlth64.obj
 
 debug.obj:      debug.cpp
                 $(CCOMPILER) $(CFLAGS) debug.cpp
-
-

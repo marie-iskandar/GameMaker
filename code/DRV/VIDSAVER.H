@@ -20,4 +20,3 @@ class VideoSaver:public VideoMode
   friend void PointSave(Coord2d Pos, Pixel col,VideoMode *v);
   friend void PointRestore(Coord2d Pos, Pixel col,VideoMode *v);
   };
-

@@ -1,9 +1,5 @@
-#include <alloc.h>
-#include <dos.h>
-#include <bios.h>
+#include "COMPAT.H"
 #include <stdio.h>
-#include <io.h>
-#include <fcntl.h>
 #include "gen.h"
 
 #include "Coord2d.hpp"
@@ -36,12 +32,12 @@ extern "C"
   void Box(Coord2d Start,Coord2d End,Pixel col,VideoMode *v);
   void Line(Coord2d Start,Coord2d End,Pixel col,VideoMode *v);
   void SetAllPal(RGBdata *pal,VideoMode *v);
-  void far GetAllPal(RGBdata *pal,VideoMode *v);
+  void GetAllPal(RGBdata *pal,VideoMode *v);
   void SetAllPalTo(RGBdata *pal,VideoMode *v);
   void Palette(int num,RGBdata pal,VideoMode *v);
   }
 
-void main(void)
+int main()
   {
   Pixel Data[500];
   Pixel DataIn[500];
@@ -117,34 +113,9 @@ void main(void)
   }
 
 #define TMODE 3
-void TextMode(void)
-  {
-  union REGS r;
-
-#ifdef MOUSE
-  int m;
-
-  if (mouinstall)
-    {
-    m=moucur(2);
-    if (m) moucur(0);
-    }
-#endif
-  r.h.ah = 0;
-  r.h.al = TMODE;
-  int86(0x10,&r,&r);
-
-#ifdef MOUSE
-  if (mouinstall)
-    {
-    initmouse();
-    MXlatx=MouseMaxx/79;
-    if (MXlatx==0) MXlatx=1;
-    MXlaty=MouseMaxy/24;
-    if (MXlaty==0) MXlaty=1;
-    if (m) moucur(True);
-    }
-#endif
+void TextMode(void) {
+  // TODO: this is no longer 'TextMode', but is the general 'destroy graphics
+  // mode' function. Implement it and rename it.
   }
 
 

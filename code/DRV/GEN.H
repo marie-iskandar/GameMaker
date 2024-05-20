@@ -11,7 +11,8 @@ typedef long int           longi;
 typedef unsigned char      uchar;
 typedef int                Block;
 
-#ifndef Sign(x)
+#ifndef SIGN_X
+  #define SIGN_X
   #define Sign(x) ((x) > 0 ? 1:  ((x) == 0 ? 0:  (-1)))
 #endif
 

@@ -57,4 +57,3 @@ static void VidSavePoint   (Coord2d Pos, Pixel col,VideoMode *Vid)
   v->idxSave++;
   v->RealPoint(Pos,col,Vid);
   }
-

@@ -1,9 +1,5 @@
-#include <alloc.h>
-#include <dos.h>
-#include <bios.h>
+#include "COMPAT.H"
 #include <stdio.h>
-#include <io.h>
-#include <fcntl.h>
 #include <string.h>
 #include "gen.h"
 
@@ -11,7 +7,7 @@
 
 typedef uchar Pixel;
 
-#include "VidDrive.hpp"
+#include "VIDDRIVE.HPP"
 
 VideoMode *Vid;
 
@@ -19,7 +15,7 @@ void TextMode(void);
 
 int ModeNum=0;
 
-void main(int argc,char *argv[])
+int main(int argc,char *argv[])
   {
   VideoDriver *Drvr;
   Pixel Data[1000];
@@ -32,7 +28,7 @@ void main(int argc,char *argv[])
     }
   if (argc>2) strcpy(Driver,argv[2]);
 
-  if (!(Drvr=LoadVideoDriver(Driver))) { printf("Error Loading Driver.\n"); return; }
+  if (!(Drvr=LoadVideoDriver(Driver))) { printf("Error Loading Driver.\n"); return -1; }
   Vid=Drvr->GetMode(ModeNum);
 
   Vid->SetMode(Vid);
@@ -47,7 +43,7 @@ void main(int argc,char *argv[])
   for (int i=0;i<1000;i++) Data[i]=1;
   Vid->GetCols(Pos,200,Data,Vid);
 
-  Vid->Point(MakeCoord(90,100),110,Vid);
+  Vid->Point(MakeCoord2d(90,100),110,Vid);
   Pos.x=0;
   for (Pos.y=0;Pos.y<Vid->Size.y;Pos.y++) Vid->Rep1Col(Pos,Pos.y,Pos.y,Vid);
   bioskey(0);
@@ -80,7 +76,7 @@ void main(int argc,char *argv[])
       if (Pos.x>Vid->Size.x) { Pos.x = 0; Pos.y+=10; }
       if (Pos.y>Vid->Size.y) Pos.y=0;
       }
-    while ( (inportb(0x3da)&8)==0);
+    wait_for_vertical_retrace();
     }
   bioskey(0);
   for (Pos.x=0;Pos.x<Vid->Size.x;Pos.x+=20)
@@ -98,5 +94,3 @@ void main(int argc,char *argv[])
 
   TextMode();
   }
-
-

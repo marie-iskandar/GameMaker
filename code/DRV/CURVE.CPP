@@ -1,9 +1,5 @@
-#include <alloc.h>
-#include <dos.h>
-#include <bios.h>
+#include "COMPAT.H"
 #include <stdio.h>
-#include <io.h>
-#include <fcntl.h>
 #include <string.h>
 #include "gen.h"
 #include "pal.h"
@@ -19,7 +15,7 @@ RGBdata cols[256];
 void Curve(Coord2d p1,Coord2d p2,Coord2d VMid,unsigned char col,VideoMode *Vid);
 void SpyraCurve(VideoMode *Vid);
 
-void main(int argc,char *argv[])
+int main(int argc,char *argv[])
   {
   VideoDriver *Drvr;
   Pixel Data[1000];

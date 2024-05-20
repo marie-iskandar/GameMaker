@@ -1,8 +1,11 @@
 // Palette manipulation routines - source in palc.c, pala.asm
 
-#include "Pixel.hpp"
+#include "GEN.H"
+#include "PIXEL.HPP"
 
 #ifndef PALETTEHDR
+#define PALETTEHDR
+
 class RGBdata
   {
   public:
@@ -34,6 +37,5 @@ class RGBdata
     }
   Pixel Match(RGBdata *colors);
   };
-#endif
 
-
+#endif

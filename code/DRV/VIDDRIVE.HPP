@@ -7,10 +7,10 @@
 
 #ifndef VIDEO_DRIVER
 #define VIDEO_DRIVER
-#include "gen.h"
-#include "pal.h"
-#include "Pixel.hpp"
-#include "Coord2d.hpp"
+#include "GEN.H"
+#include "PAL.H"
+#include "PIXEL.HPP"
+#include "COORD2D.HPP"
 
 class VideoMode
   {
@@ -65,8 +65,7 @@ class VideoDriver
   VideoMode FirstDriver;       // First Video Driver data structure is here.
   VideoMode*GetMode(int num)
     {
-    if (num>NumModes) return(False);
-    return( (&FirstDriver+num));
+    return &FirstDriver;
     }
   boolean Validate(int MinVersion);
   };

@@ -54,5 +54,3 @@ void BitMap::Get  (Coord2d Pos,VideoMode *v)
         v->GetCols(Pos,End.x,CurAddr,v);
       }
     }
-
-
