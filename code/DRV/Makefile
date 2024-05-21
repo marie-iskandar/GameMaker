@@ -1,5 +1,8 @@
-VIDDRIVE.o: VIDDRIVE.HPP VIDDRVC.CPP
-	clang++ -c VIDDRVC.CPP -o VIDDRIVE.o
+clean:
+	rm *.o *.exe
 
-TRY: TRY.CPP VIDDRIVE.o
-	clang++ -o TRY TRY.CPP VIDDRIVE.o
+VIDDRIVE.o: VIDDRIVE.HPP VIDDRVC.CPP
+	clang++ -g -O0 -c VIDDRVC.CPP -o VIDDRIVE.o
+
+TRY.exe: TRY.CPP VIDDRIVE.o
+	clang++ -g -O0 -o TRY.exe TRY.CPP VIDDRIVE.o
