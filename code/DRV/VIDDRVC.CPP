@@ -6,9 +6,10 @@
 //----------------------------------------------------------------------
 
 #include <string.h>
+
+#include "COORD2D.HPP"
 #include "GEN.H"
 #include "PIXEL.HPP"
-#include "COORD2D.HPP"
 #include "VIDDRIVE.HPP"
 
 static void SetMode (VideoMode *v);
@@ -28,23 +29,25 @@ static void DrawBlock (Coord2d Pos,Block b,VideoMode *v);
 static void Box(Coord2d Start,Coord2d End,Pixel col,VideoMode *v);
 static void Line(Coord2d Start,Coord2d End,Pixel col,VideoMode *v);
 static void BCurve(Coord2d p1,Coord2d p2,Coord2d VMid,unsigned char col,VideoMode *v);
- 
+static void SetAllPal(RGBdata *pal,VideoMode *v);
+static void GetAllPal(RGBdata *pal,VideoMode *v);
+static void SetAllPalTo(RGBdata *pal,VideoMode *v);
+static void Palette(int num,RGBdata pal,VideoMode *v);
+
 
 VideoMode Defaults;
 
-extern "C" void SetAllPal(RGBdata *pal,VideoMode *v);
-extern "C" void GetAllPal(RGBdata *pal,VideoMode *v);
-extern "C" void SetAllPalTo(RGBdata *pal,VideoMode *v);
-extern "C" void Palette(int num,RGBdata pal,VideoMode *v);
-
-
 char *FontPtr;
+
+VideoDriver::VideoDriver() {
+  FirstDriver.SetStdRoutines();
+}
+VideoDriver::~VideoDriver() {}
 
 boolean VideoDriver::Validate(int MinVersion)
   {
   return True;
   }
-
 
 void VideoMode::SetStdRoutines(void)
   {
@@ -75,6 +78,10 @@ VideoDriver* LoadVideoDriver(char *FileName)
   {
   return new VideoDriver();
   }
+
+void TextMode(void) {
+  // TODO: uninit
+}
 
 
 /*-----------------------BASIC GRAPHICS FUNCTIONS--------------------*/
@@ -271,6 +278,19 @@ static void Line(Coord2d Start,Coord2d End,Pixel col,VideoMode *v)
       }
     }
   }
+
+static void SetAllPal(RGBdata *pal,VideoMode *v) {
+  // TODO: implement
+}
+static void GetAllPal(RGBdata *pal,VideoMode *v) {
+  // TODO: implement
+}
+static void SetAllPalTo(RGBdata *pal,VideoMode *v) {
+  // TODO: implement
+}
+static void Palette(int num,RGBdata pal,VideoMode *v) {
+  // TODO: implement
+}
 
 /*
 static void SetViewPos (unsigned long int pos,VideoMode *v)

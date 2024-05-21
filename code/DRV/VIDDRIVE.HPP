@@ -62,6 +62,8 @@ class VideoDriver
   char VGAType[32];
   public:
   char NumModes;
+  VideoDriver();
+  ~VideoDriver();
   VideoMode FirstDriver;       // First Video Driver data structure is here.
   VideoMode*GetMode(int num)
     {

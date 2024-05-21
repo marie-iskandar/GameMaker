@@ -1,12 +1,10 @@
-#include "COMPAT.H"
 #include <stdio.h>
 #include <string.h>
-#include "gen.h"
 
-#include "Coord2d.hpp"
-
-typedef uchar Pixel;
-
+#include "COMPAT.H"
+#include "COORD2D.HPP"
+#include "GEN.H"
+#include "PIXEL.HPP"
 #include "VIDDRIVE.HPP"
 
 VideoMode *Vid;
