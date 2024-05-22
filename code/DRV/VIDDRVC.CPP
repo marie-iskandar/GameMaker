@@ -5,7 +5,9 @@
 // NOT PUBLIC DOMAIN!
 //----------------------------------------------------------------------
 
+#include <stdlib.h>
 #include <string.h>
+#include "SDL.h"
 
 #include "COORD2D.HPP"
 #include "GEN.H"
@@ -77,6 +79,8 @@ void VideoMode::SetStdRoutines(void)
 
 VideoDriver* LoadVideoDriver(char *FileName)
   {
+  SDL_Init(SDL_INIT_EVERYTHING);
+  atexit(SDL_Quit);
   return new VideoDriver();
   }
 
