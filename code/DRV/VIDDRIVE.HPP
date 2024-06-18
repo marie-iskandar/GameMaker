@@ -21,34 +21,32 @@ class VideoMode
   Pixel       *Address;
   long int     ViewPageOff;
   uint         BIOSMode;
-  void         (*SetMode)    (VideoMode *v);
-  void         (*Clear)      (Pixel Col,VideoMode *v);
-  void         (*Point)      (Coord2d Pos, Pixel col,VideoMode *v);
-  Pixel        (*GetCol)     (Coord2d Pos,VideoMode *v);
-  void         (*Rep1Col)    (Coord2d Pos,uint Num,Pixel col,VideoMode *v);
+  void         SetMode    (VideoMode *v);
+  void         Clear      (Pixel Col,VideoMode *v);
+  void         Point      (Coord2d Pos, Pixel col,VideoMode *v);
+  Pixel        GetCol     (Coord2d Pos,VideoMode *v);
+  void         Rep1Col    (Coord2d Pos,uint Num,Pixel col,VideoMode *v);
 
-  void         (*Rep1ColRev) (Coord2d Pos,uint Num,Pixel col,VideoMode *v);
-  void         (*RepCols)    (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v);
-  void         (*RepColsRev) (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v);
-  int          (*GetCols)    (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v);
-  int          (*GetColsRev) (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v);
+  void         Rep1ColRev (Coord2d Pos,uint Num,Pixel col,VideoMode *v);
+  void         RepCols    (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v);
+  void         RepColsRev (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v);
+  int          GetCols    (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v);
+  int          GetColsRev (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v);
 
-  void         (*Line)       (Coord2d Start,Coord2d End,Pixel col,VideoMode *v);
-  void         (*Box)        (Coord2d Start,Coord2d End,Pixel col,VideoMode *v);
-  void         (*BoxFill)    (Coord2d Start,Coord2d End,Pixel col,VideoMode *v);
-  void         (*DrawBlock)  (Coord2d Pos,int b,VideoMode *v);
-  void         (*BCurve)  (Coord2d p1,Coord2d p2,Coord2d VMid,unsigned char col,VideoMode *v);
+  void         Line       (Coord2d Start,Coord2d End,Pixel col,VideoMode *v);
+  void         Box        (Coord2d Start,Coord2d End,Pixel col,VideoMode *v);
+  void         BoxFill    (Coord2d Start,Coord2d End,Pixel col,VideoMode *v);
+  void         DrawBlock  (Coord2d Pos,int b,VideoMode *v);
+  void         BCurve  (Coord2d p1,Coord2d p2,Coord2d VMid,unsigned char col,VideoMode *v);
 
-  void         (*Spline)  (Coord2d p1,Coord2d p2,Coord2d VMid,unsigned char col,VideoMode *v);
-  void         (*SetViewPos) (unsigned long int pos,VideoMode *v);
-  void         (*SetWritePage) (unsigned long int pos,VideoMode *v);
-  void         (*SetAllPal)  (RGBdata *pal,VideoMode *v);
-  void         (*GetAllPal)  (RGBdata *pal,VideoMode *v);
+  void         Spline  (Coord2d p1,Coord2d p2,Coord2d VMid,unsigned char col,VideoMode *v);
+  void         SetViewPos (unsigned long int pos,VideoMode *v);
+  void         SetWritePage (unsigned long int pos,VideoMode *v);
+  void         SetAllPal  (RGBdata *pal,VideoMode *v);
+  void         GetAllPal  (RGBdata *pal,VideoMode *v);
 
-  void         (*SetAllPalTo)(RGBdata *pal,VideoMode *v);
-  void         (*SetPal)     (int num,RGBdata  pal,VideoMode *v);
-
-  void         SetStdRoutines(void);
+  void         SetAllPalTo(RGBdata *pal,VideoMode *v);
+  void         SetPal     (int num,RGBdata  pal,VideoMode *v);
   };
 
 class VideoDriver

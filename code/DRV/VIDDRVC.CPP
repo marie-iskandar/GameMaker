@@ -14,67 +14,17 @@
 #include "PIXEL.HPP"
 #include "VIDDRIVE.HPP"
 
-static void SetMode (VideoMode *v);
-static void Clear   (Pixel Col,VideoMode *v);
-static void Point   (Coord2d Pos, Pixel col,VideoMode *v);
-static Pixel GetCol (Coord2d Pos,VideoMode *v);
-static void Rep1Col    (Coord2d Pos,uint Num,Pixel col,VideoMode *v);
-static void Rep1ColRev (Coord2d Pos,uint Num,Pixel col,VideoMode *v);
-static void RepCols    (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v);
-static void RepColsRev (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v);
-static int  GetCols    (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v);
-static int  GetColsRev (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v);
-static void BoxFill (Coord2d Start,Coord2d End,Pixel col,VideoMode *v);
-static void DrawBlock (Coord2d Pos,Block b,VideoMode *v);
-static void SetViewPos (unsigned long int pos,VideoMode *v);
-static void SetWritePage (unsigned long int pos,VideoMode *v);
-static void Box(Coord2d Start,Coord2d End,Pixel col,VideoMode *v);
-static void Line(Coord2d Start,Coord2d End,Pixel col,VideoMode *v);
-static void BCurve(Coord2d p1,Coord2d p2,Coord2d VMid,unsigned char col,VideoMode *v);
-static void SetAllPal(RGBdata *pal,VideoMode *v);
-static void GetAllPal(RGBdata *pal,VideoMode *v);
-static void SetAllPalTo(RGBdata *pal,VideoMode *v);
-static void Palette(int num,RGBdata pal,VideoMode *v);
-
 VideoMode Defaults;
 
 char *FontPtr;
 
 VideoDriver::VideoDriver() {
-  FirstDriver.SetStdRoutines();
 }
 VideoDriver::~VideoDriver() {}
 
 boolean VideoDriver::Validate(int MinVersion)
   {
   return True;
-  }
-
-void VideoMode::SetStdRoutines(void)
-  {
-  VideoMode *Video   = this;
-  Video->SetMode     = ::SetMode;
-  Video->Clear       = ::Clear;
-  Video->Point       = ::Point;
-  Video->GetCol      = ::GetCol;
-  Video->Rep1Col     = ::Rep1Col;
-  Video->Rep1ColRev  = ::Rep1ColRev;
-  Video->RepCols     = ::RepCols;
-  Video->RepColsRev  = ::RepColsRev;
-  Video->GetCols     = ::GetCols;
-  Video->GetColsRev  = ::GetColsRev;
-  Video->Line        = ::Line;
-  Video->Box         = ::Box;
-  Video->BoxFill     = ::BoxFill;
-  Video->DrawBlock   = ::DrawBlock;
-  Video->BCurve      = ::BCurve;
-  Video->Spline      = ::BCurve;   // Place holder for now.
-  Video->SetViewPos  = ::SetViewPos;
-  Video->SetWritePage = ::SetWritePage;
-  Video->SetAllPal   = ::SetAllPal;
-  Video->GetAllPal   = ::GetAllPal;
-  Video->SetAllPalTo = ::SetAllPalTo;
-  Video->SetPal      = ::Palette;
   }
 
 VideoDriver* LoadVideoDriver(char *FileName)
@@ -91,7 +41,7 @@ void TextMode(void) {
 
 /*-----------------------BASIC GRAPHICS FUNCTIONS--------------------*/
 
-void BCurve(Coord2d p1,Coord2d p2,Coord2d VMid,unsigned char col,VideoMode *V)
+void VideoMode::BCurve(Coord2d p1,Coord2d p2,Coord2d VMid,unsigned char col,VideoMode *V)
   {
   int l;
   Coord2d VFrom,VTo,VCur,VBres,VDelta;
@@ -152,12 +102,12 @@ void BCurve(Coord2d p1,Coord2d p2,Coord2d VMid,unsigned char col,VideoMode *V)
   }
 
 
-static void SetMode (VideoMode *v)
+void VideoMode::SetMode (VideoMode *v)
   {
   // TODO: implement
   }
 
-static void Clear   (Pixel Col,VideoMode *v)
+void VideoMode::Clear   (Pixel Col,VideoMode *v)
   {
   // TODO: implement
   }
@@ -165,43 +115,43 @@ static void Clear   (Pixel Col,VideoMode *v)
 // ROUTINES NEED BOUNDS CHECKING!
 // Interdependancy checking required!
 
-static void Point   (Coord2d Pos, Pixel col,VideoMode *v)
+void VideoMode::Point   (Coord2d Pos, Pixel col,VideoMode *v)
   {
   v->Rep1Col(Pos,1,col,v);
   }
 
-static Pixel GetCol (Coord2d Pos,VideoMode *v)
+Pixel VideoMode::GetCol (Coord2d Pos,VideoMode *v)
   {
   Pixel Data;
   v->GetCols (Pos,1,&Data,v);
   return(Data);
   }
 
-static void Rep1Col (Coord2d Pos,uint Num,Pixel col,VideoMode *v)
+void VideoMode::Rep1Col (Coord2d Pos,uint Num,Pixel col,VideoMode *v)
   {
   Num+=Pos.x;
   if (Num>v->Size.x) Num=v->Size.x;
   for (;Pos.x<Num;Pos.x++) v->Point(Pos,col,v);
   }
 
-static void Rep1ColRev (Coord2d Pos,uint Num,Pixel col,VideoMode *v)
+void VideoMode::Rep1ColRev (Coord2d Pos,uint Num,Pixel col,VideoMode *v)
   {
   Pos.x-=Num;
   v->Rep1Col(Pos,Num,col,v);
   }
 
-static void RepCols (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v)
+void VideoMode::RepCols (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v)
   {
   Num+=Pos.x;
   if (Num>v->Size.x) Num=v->Size.x;
   for (;Pos.x<Num;Pos.x++,cols++) v->Point(Pos,*cols,v);
   }
 
-static void RepColsRev (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v)
+void VideoMode::RepColsRev (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v)
   {
   }
 
-static int  GetCols (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v)
+int VideoMode::GetCols (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v)
   {
   Num+=Pos.x;
   if (Num>v->Size.x) Num=v->Size.x;
@@ -209,19 +159,19 @@ static int  GetCols (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v)
   return 0;
   }
 
-static int  GetColsRev (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v)
+int VideoMode::GetColsRev (Coord2d Pos,uint Num,Pixel *cols,VideoMode *v)
   { return 0; }
 
-static void BoxFill (Coord2d Start,Coord2d End,Pixel col,VideoMode *v)
+void VideoMode::BoxFill (Coord2d Start,Coord2d End,Pixel col,VideoMode *v)
   {
   int Len=(End.x-Start.x)+1;
   for (;Start.y<=End.y;Start.y++) v->Rep1Col(Start,Len,col,v);
   }
 
-static void DrawBlock (Coord2d Pos,Block b,VideoMode *v)
+void VideoMode::DrawBlock (Coord2d Pos,Block b,VideoMode *v)
   {}
 
-static void Box(Coord2d ur,Coord2d ll,Pixel col,VideoMode *v)
+void VideoMode::Box(Coord2d ur,Coord2d ll,Pixel col,VideoMode *v)
   {
   if (ur.x==ll.x) ll.x++;
   if (ur.y==ll.y) ll.y++;
@@ -238,7 +188,7 @@ static void Box(Coord2d ur,Coord2d ll,Pixel col,VideoMode *v)
   v->Line(ll,ul+MakeCoord2d(0,1),col,v);
   }
 
-static void Line(Coord2d Start,Coord2d End,Pixel col,VideoMode *v)
+void VideoMode::Line(Coord2d Start,Coord2d End,Pixel col,VideoMode *v)
   {
   register int l;
   Coord2d Delta,Sign;
@@ -284,27 +234,24 @@ static void Line(Coord2d Start,Coord2d End,Pixel col,VideoMode *v)
     }
   }
 
-static void SetAllPal(RGBdata *pal,VideoMode *v) {
-  // TODO: implement
-}
-static void GetAllPal(RGBdata *pal,VideoMode *v) {
-  // TODO: implement
-}
-static void SetAllPalTo(RGBdata *pal,VideoMode *v) {
-  // TODO: implement
-}
-static void Palette(int num,RGBdata pal,VideoMode *v) {
+void VideoMode::SetViewPos(unsigned long int pos,VideoMode *v) {
   // TODO: implement
 }
 
-static void SetViewPos(unsigned long int pos,VideoMode *v) {
+void VideoMode::SetWritePage(unsigned long int pos,VideoMode *v) {
   // TODO: implement
 }
 
-static void SetWritePage(unsigned long int pos,VideoMode *v) {
+void VideoMode::SetAllPal(RGBdata *pal,VideoMode *v) {
   // TODO: implement
 }
-static void SetPal(int num,RGBdata  pal,VideoMode *v) {
+void VideoMode::GetAllPal(RGBdata *pal,VideoMode *v) {
+  // TODO: implement
+}
+void VideoMode::SetAllPalTo(RGBdata *pal,VideoMode *v) {
+  // TODO: implement
+}
+void VideoMode::SetPal(int num,RGBdata pal,VideoMode *v) {
   // TODO: implement
 }
 
